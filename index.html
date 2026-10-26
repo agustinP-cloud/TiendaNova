@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TiendaNova – Tecnología y accesorios</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="wrap top">
+<div class="logo">🛒 TiendaNova</div>
+<span class="secure">🔒 Sitio seguro</span>
+<button class="ghost" id="login">Ingresar</button>
+<button class="btn" id="cart">Carrito (<span id="n">0</span>)</button>
+</div></header>
+
+<main class="wrap">
+<section class="hero">
+<h1>Tecnología que llega a tu casa</h1>
+<p>Auriculares, cargadores, teclados y más, con envíos a todo el país y pago protegido.</p>
+<button class="btn" onclick="document.getElementById('prod').scrollIntoView({behavior:'smooth'})">Ver productos</button>
+</section>
+
+<h2 id="prod">Destacados</h2>
+<div class="grid" id="grid"></div>
+
+<h2>Comprá con tranquilidad</h2>
+<div class="trust">
+<div><b>🔒 Conexión cifrada</b><span>Todo el sitio funciona con HTTPS.</span></div>
+<div><b>💳 Pago protegido</b><span>Los datos de tarjeta los procesa la pasarela, no los guardamos.</span></div>
+<div><b>🔑 Cuenta segura</b><span>Contraseñas cifradas y verificación en dos pasos.</span></div>
+<div><b>📦 Seguimiento</b><span>Podés ver el estado de tu pedido en todo momento.</span></div>
+</div>
+</main>
+
+<footer>TiendaNova · Sitio de ejemplo para trabajo práctico de Seguridad Informática · Política de privacidad conforme a la Ley 25.326</footer>
+
+<dialog id="dlg">
+<h3>Ingresar a tu cuenta</h3>
+<label for="em">Email</label><input id="em" type="email" placeholder="nombre@correo.com">
+<label for="pw">Contraseña</label><input id="pw" type="password" placeholder="••••••••">
+<p class="note">🔒 Tu contraseña viaja cifrada. Podés activar la verificación en dos pasos desde tu perfil.</p>
+<div class="row"><button class="btn" id="ok">Entrar</button><button class="ghost" id="no">Cancelar</button></div>
+</dialog>
+<div class="toast" id="t"></div>
+
+<script>
+var items=[["🎧","Auriculares Bluetooth","Cancelación de ruido",42900],["⌨️","Teclado mecánico","Switches rojos",58500],["🖱️","Mouse inalámbrico","Ergonómico",19900],["🔌","Cargador rápido 65W","USB-C",15400],["📱","Funda para celular","Antigolpes",8900],["💾","Pendrive 128 GB","USB 3.0",11200],["🖥️","Monitor 24 pulgadas","Full HD",189000],["📷","Webcam HD","Con micrófono",24700]];
+var g=document.getElementById("grid"),n=0,tm;
+items.forEach(function(p){
+var d=document.createElement("div");d.className="p";
+d.innerHTML='<div class="img">'+p[0]+'</div><b>'+p[1]+'</b><small>'+p[2]+'</small><span class="price">$'+p[3].toLocaleString("es-AR")+'</span><button class="btn">Agregar</button>';
+d.querySelector("button").onclick=function(){n++;document.getElementById("n").textContent=n;toast(p[1]+" agregado al carrito")};
+g.appendChild(d);
+});
+function toast(m){var t=document.getElementById("t");t.textContent=m;t.classList.add("on");clearTimeout(tm);tm=setTimeout(function(){t.classList.remove("on")},1800)}
+var dlg=document.getElementById("dlg");
+document.getElementById("login").onclick=function(){dlg.showModal()};
+document.getElementById("no").onclick=function(){dlg.close()};
+document.getElementById("ok").onclick=function(){dlg.close();toast("Demo: inicio de sesión simulado")};
+document.getElementById("cart").onclick=function(){toast(n?n+" producto(s) en tu carrito":"Tu carrito está vacío")};
+</script>
+</body>
+</html>
